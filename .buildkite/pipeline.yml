@@ -1,13 +1,10 @@
 steps:
-  - label: ":gem: :rspec: Specs"
+  - label: ":gem: Build"
     command:
-      - bundle install
-      - bundle exec rake spec
+      - rake build
     plugins:
       - docker#v5.6.0:
-          image: "ruby:2.7"
-          environment:
-            - BUNDLE_RUBYGEMS__PKG__GITHUB__COM
+          image: "ruby:3.2"
 
   - wait
 
@@ -20,8 +17,7 @@ steps:
       - gem push --key github --host https://rubygems.pkg.github.com/Go-Shippit $(ls pkg/*.gem)
     plugins:
       - docker#v5.6.0:
-          image: "ruby:2.7"
-          mount-ssh-agent: true
+          image: "ruby:3.2"
           environment:
             - GEM_CREDENTIALS
             - BUNDLE_RUBYGEMS__PKG__GITHUB__COM
